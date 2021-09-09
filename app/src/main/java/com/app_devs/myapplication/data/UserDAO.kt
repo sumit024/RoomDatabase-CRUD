@@ -1,10 +1,11 @@
 package com.app_devs.myapplication.data
 
 import androidx.lifecycle.LiveData
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-
+@Dao
 interface UserDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
