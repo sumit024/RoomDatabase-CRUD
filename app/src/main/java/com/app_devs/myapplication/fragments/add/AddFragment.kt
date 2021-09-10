@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app_devs.myapplication.R
-import com.app_devs.myapplication.data.User
-import com.app_devs.myapplication.data.UserViewModel
+import com.app_devs.myapplication.model.User
+import com.app_devs.myapplication.viewModel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 
@@ -40,7 +40,7 @@ class AddFragment : Fragment() {
         val vaccination_status=et_status.text.toString()
         if(verifyInput(name,age,vaccination_status))
         {
-            val user=User(0,name,Integer.parseInt(age.toString()),vaccination_status)
+            val user= User(0,name,Integer.parseInt(age.toString()),vaccination_status)
             mUserViewModel.addUser(user)
             Toast.makeText(requireContext(),"Added",Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_addFragment_to_listFragment)

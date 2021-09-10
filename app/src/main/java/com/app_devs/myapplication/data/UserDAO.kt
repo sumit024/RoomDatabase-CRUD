@@ -1,10 +1,9 @@
 package com.app_devs.myapplication.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import com.app_devs.myapplication.model.User
+
 @Dao
 interface UserDAO {
 
@@ -13,4 +12,7 @@ interface UserDAO {
 
     @Query("SELECT * FROM user_table ORDER BY id ASC")
     fun readAllData():LiveData<List<User>>
+
+    @Update
+    suspend fun updateUser(user: User)
 }
