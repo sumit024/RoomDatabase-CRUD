@@ -1,13 +1,12 @@
 package com.app_devs.myapplication.fragments.update
 
+import android.app.AlertDialog
 import android.icu.number.IntegerWidth
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -35,7 +34,9 @@ class UpdateFragment : Fragment() {
         view.btn_update.setOnClickListener{
             updateItem()
         }
+        setHasOptionsMenu(true)
         return view
+
     }
     private fun updateItem()
     {
@@ -55,6 +56,32 @@ class UpdateFragment : Fragment() {
     private fun verifyInput(name:String, age: Editable, status:String):Boolean
     {
         return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(age) && TextUtils.isEmpty(status) )
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+       inflater.inflate(R.menu.menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==R.id.delete){
+            deleteUser()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteUser() {
+        val builder=AlertDialog.Builder(requireContext())
+        builder.setNegativeButton("No"){_, _ ->
+
+        }
+        builder.setPositiveButton("Yes"){_, _ ->
+            mUserViewModel.deleteUser(args.currentUser)
+            Toast.makeText(requireContext(),"Deleted ${args.currentUser.name}",Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
+        builder.setTitle("Delete ${args.currentUser.name} ?")
+        builder.setMessage("Are you sure you want to delete  ${args.currentUser.name} ?")
+        builder.create().show()
     }
 
 }
